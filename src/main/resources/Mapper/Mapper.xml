@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bw.mapper.InfosMapper">
+	<select id="cx" resultType="com.bw.bean.Infos">
+	SELECT i.*,t.cname FROM info AS i JOIN tea AS t WHERE i.`id`=t.`cid`
+	<if test="sid!=null and sid!=''">
+		and i.sid=#{sid}
+	</if>
+	<if test="status!=null">
+		and i.status=#{status}
+	</if>
+	<if test="cname!=null and cname!=''">
+		and t.cname=#{cname}
+	</if>
+	</select>
+	
+	<select id="cxtea" resultType="com.bw.bean.Tea">
+	SELECT * from tea
+	</select>
+	
+	<insert id="add" parameterType="com.bw.bean.Infos">
+		INSERT INTO info(sid,cname,uptime,status)VALUES(#{sid},#{cname},now(),#{status})
+	</insert>
+	
+	<update id="update" parameterType="int">
+		UPDATE info SET status=1 WHERE id=#{id}
+	</update>
+	<select id="ck" resultType="int">
+	SELECT i.*,t.cname FROM info AS i JOIN tea AS t WHERE i.`id`=t.`cid`
+	</select>
+</mapper>
